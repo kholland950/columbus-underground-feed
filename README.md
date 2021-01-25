@@ -1,14 +1,14 @@
 # ColumbusUnderground Feed Reader
 
 ## Stack
-Spring Boot
-Groovy
-JPA
-H2
-ROME
+- Spring Boot
+- Groovy
+- JPA
+- H2
+- ROME
 
-Create React App
-Material-UI
+- Create React App
+- Material-UI
 
 ## Running
 ### Prereqs
@@ -19,6 +19,7 @@ Java 11
 cd columbus-underground-feed
 ./gradlew bootRun
 ```
+This will use the production build of the frontend.
 
 ### Running the frontend dev server and watchers
 NPM is needed to run the frontend scripts directly
