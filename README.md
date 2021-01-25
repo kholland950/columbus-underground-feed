@@ -19,6 +19,8 @@ Java 11
 cd columbus-underground-feed
 ./gradlew bootRun
 ```
+The app will now be running at http://localhost:8080
+
 This will use the production build of the frontend.
 
 ### Running the frontend dev server and watchers
@@ -27,6 +29,10 @@ NPM is needed to run the frontend scripts directly
 cd frontend
 npm run start
 ```
+
+### API
+#### Routes
+- /api/feed: Returns a list of all articles in the feed in JSON
 
 ## Building
 ```
