@@ -1,0 +1,61 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'com.github.node-gradle.node' version '2.2.0'
+	id 'groovy'
+}
+
+group = 'com.interview.ike'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.codehaus.groovy:groovy'
+	implementation 'rome:rome:1.0'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+node {
+	version = '14.15.4'
+	npmVersion = '6.14.8'
+	download = true
+}
+
+
+def jsBuildDir = project.buildDir.absolutePath
+def jsProjectDir = project.projectDir.absolutePath
+def jsSourceDir = jsProjectDir + '/src'
+def jsPublicDir = jsProjectDir + '/public'
+def packageJsonPath = jsProjectDir + '/package.json'
+
+task appNpmInstall(type: NpmTask) {
+	description = "Installs dependencies from package.json"
+	workingDir = file("${project.projectDir}/frontend")
+	args = ['install']
+}
+
+task appNpmRunBuild(type: NpmTask, dependsOn: 'appNpmInstall') {
+	description = "Installs dependencies from package.json"
+	workingDir = file("${project.projectDir}/frontend")
+	args = ['run', 'build']
+}
+
+task jsBuild(type: Copy, dependsOn: 'appNpmRunBuild') {
+	from "$projectDir/frontend/build"
+	into "$buildDir/resources/main/static"
+}
+
+processResources.dependsOn 'jsBuild'
+
+test {
+	useJUnitPlatform()
+}
